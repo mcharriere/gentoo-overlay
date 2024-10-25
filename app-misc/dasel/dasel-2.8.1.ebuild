@@ -7,15 +7,14 @@ inherit go-module
 DESCRIPTION="Query, update and convert data structures from the command line"
 HOMEPAGE="https://github.com/TomWright/dasel"
 SRC_URI="https://github.com/TomWright/dasel/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-SRC_URI="$SRC_UIR https://raw.githubusercontent.com/mcharriere/gentoo-overlay/refs/heads/main/deps/${P}-deps.tar.xz"
 
 LICENSE="MIT Apache-2.0 BSD BSD-2 ISC"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE=""
 
 src_compile() {
-	CGO_ENABLED=0 go build -o bin/dasel -ldflags="-X 'github.com/tomwright/dasel/internal.Version=${PV}'" ./cmd/dasel || die
+	CGO_ENABLED=0 go build -o bin/dasel -ldflags="-X 'github.com/tomwright/dasel/v2/internal.Version=${PV}'" ./cmd/dasel || die
 }
 
 src_install() {
