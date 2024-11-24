@@ -7,6 +7,7 @@ inherit go-module
 DESCRIPTION="Query, update and convert data structures from the command line"
 HOMEPAGE="https://github.com/dhth/omm"
 SRC_URI="https://github.com/dhth/omm/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="$SRC_URI https://raw.githubusercontent.com/mcharriere/gentoo-overlay/refs/heads/main/deps/${P}-deps.tar.xz"
 
 LICENSE="MIT Apache-2.0 BSD BSD-2 ISC"
 SLOT="0"
