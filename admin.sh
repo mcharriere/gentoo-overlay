@@ -60,21 +60,22 @@ function deps() {
 
     cd $EBUILD_PATH
     ebuild "$EBUILD_FILE" unpack
+    sudo chmod g+rwX -R "/var/tmp/portage/$GROUP/$NAME-$VERSION"
     cd "/var/tmp/portage/$GROUP/$NAME-$VERSION/work/$NAME-$VERSION"
     go mod vendor
 
     cd ..
-    # echo "generating $DEPS_PKG"
-    # tar --create --auto-compress --file $DEPS_PKG "$NAME-$VERSION/vendor"
-    # mv $DEPS_PKG $DEPS_PATH
+    echo "generating $DEPS_PKG"
+    tar --create --auto-compress --file $DEPS_PKG "$NAME-$VERSION/vendor"
+    mv $DEPS_PKG $DEPS_PATH
 
     cd $EBUILD_PATH
     ebuild "$EBUILD_FILE" clean
 
     cd $REPO
-    # git add "deps/$DEPS_PKG"
-    # git commit -m "generate $DEPS_PKG"
-    # git push origin main
+    git add "deps/$DEPS_PKG"
+    git commit -m "generate $DEPS_PKG"
+    git push origin main
 
     cd $EBUILD_PATH
     awk -i inplace "/^SRC_URI=/{ print;print \"SRC_URI=\$SRC_URI $DEPS_REPO/\${P}-deps.tar.xz\";next }1" $EBUILD_FILE
